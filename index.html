@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,95 +8,67 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0f0e;
-    --surface: #141716;
-    --surface2: #1c1f1d;
-    --border: #2a2e2b;
-    --accent: #b8f04a;
-    --accent2: #4af0b8;
-    --warn: #f0b84a;
-    --danger: #f04a4a;
-    --text: #e8ede9;
-    --muted: #6b7a6d;
-    --card: #181b19;
+    --bg: #0d0f0e; --surface: #141716; --surface2: #1c1f1d; --border: #2a2e2b;
+    --accent: #b8f04a; --accent2: #4af0b8; --warn: #f0b84a; --danger: #f04a4a;
+    --text: #e8ede9; --muted: #6b7a6d; --card: #181b19;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  body::before {
-    content:'';
-    position:fixed; inset:0;
-    background:
-      radial-gradient(ellipse at 15% 15%, rgba(184,240,74,0.05) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 85%, rgba(74,240,184,0.04) 0%, transparent 55%);
-    pointer-events:none; z-index:0;
-  }
+  body { background:var(--bg); color:var(--text); font-family:'Barlow',sans-serif; min-height:100vh; overflow-x:hidden; }
+  body::before { content:''; position:fixed; inset:0; background: radial-gradient(ellipse at 15% 15%, rgba(184,240,74,0.05) 0%, transparent 55%), radial-gradient(ellipse at 85% 85%, rgba(74,240,184,0.04) 0%, transparent 55%); pointer-events:none; z-index:0; }
   .container { max-width:940px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
-
   header { padding:48px 0 28px; border-bottom:1px solid var(--border); margin-bottom:28px; }
   .logo { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:52px; letter-spacing:-1px; line-height:1; color:var(--accent); text-transform:uppercase; }
   .logo span { color:var(--muted); font-weight:300; }
   .tagline { font-size:12px; color:var(--muted); letter-spacing:3px; text-transform:uppercase; margin-top:6px; }
-
-  #weather-strip {
-    background:var(--surface); border:1px solid var(--border); border-radius:12px;
-    padding:18px 24px; margin-bottom:24px; display:flex; align-items:center;
-    gap:20px; flex-wrap:wrap; min-height:68px;
-  }
+  #weather-strip { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 24px; margin-bottom:24px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; min-height:68px; }
   .w-stat { display:flex; flex-direction:column; gap:2px; }
   .w-label { font-size:9px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
   .w-val { font-family:'Barlow Condensed',sans-serif; font-size:21px; font-weight:700; line-height:1; }
   .w-div { width:1px; height:32px; background:var(--border); flex-shrink:0; }
   .loc-badge { margin-left:auto; font-size:11px; color:var(--muted); display:flex; align-items:center; gap:6px; }
-  .loc-dot { width:6px;height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s ease-in-out infinite; }
-  .spinner-sm { width:14px;height:14px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; display:inline-block; }
+  .loc-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s ease-in-out infinite; }
+  .spinner-sm { width:14px; height:14px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; display:inline-block; }
   @keyframes spin { to { transform:rotate(360deg); } }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-  .tabs { display:flex; gap:0; margin-bottom:24px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:4px; }
+  .tabs { display:flex; margin-bottom:24px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:4px; }
   .tab { flex:1; padding:10px; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); cursor:pointer; border-radius:7px; transition:all .2s; }
   .tab.active { background:var(--accent); color:#0d0f0e; font-weight:700; }
   .tab:hover:not(.active) { color:var(--text); }
-
   .panel { display:none; }
   .panel.active { display:block; }
-
-  .route-section { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px; }
+  .form-section, .route-section { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px; }
   .section-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
-
-  .drop-zone {
-    border:2px dashed var(--border); border-radius:10px; padding:36px 24px;
-    text-align:center; cursor:pointer; transition:all .2s; position:relative;
-  }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .form-grid.cols3 { grid-template-columns:1fr 1fr 1fr; }
+  .form-group { display:flex; flex-direction:column; gap:7px; }
+  label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
+  select { background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'Barlow',sans-serif; font-size:14px; padding:11px 14px; outline:none; transition:border-color .2s; width:100%; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7a6d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+  select:focus { border-color:var(--accent); }
+  .ride-types { display:flex; gap:8px; flex-wrap:wrap; }
+  .ride-pill { background:var(--surface2); border:1px solid var(--border); border-radius:100px; padding:8px 16px; font-size:13px; font-weight:500; cursor:pointer; transition:all .15s; user-select:none; }
+  .ride-pill:hover { border-color:var(--accent); color:var(--accent); }
+  .ride-pill.active { background:var(--accent); border-color:var(--accent); color:#0d0f0e; }
+  .drop-zone { border:2px dashed var(--border); border-radius:10px; padding:36px 24px; text-align:center; cursor:pointer; transition:all .2s; position:relative; }
   .drop-zone:hover, .drop-zone.drag-over { border-color:var(--accent); background:rgba(184,240,74,0.04); }
   .drop-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
   .drop-icon { font-size:32px; margin-bottom:10px; }
   .drop-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; margin-bottom:4px; }
   .drop-sub { font-size:12px; color:var(--muted); }
-
   .or-divider { display:flex; align-items:center; gap:12px; margin:16px 0; color:var(--muted); font-size:11px; letter-spacing:2px; text-transform:uppercase; }
   .or-divider::before,.or-divider::after { content:''; flex:1; height:1px; background:var(--border); }
-
   .url-row { display:flex; gap:10px; }
   .url-input { flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'Barlow',sans-serif; font-size:14px; padding:11px 16px; outline:none; transition:border-color .2s; }
   .url-input:focus { border-color:var(--accent); }
   .url-input::placeholder { color:var(--muted); }
   .url-btn { background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--accent); font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:2px; text-transform:uppercase; padding:11px 20px; cursor:pointer; white-space:nowrap; transition:all .2s; }
-  .url-btn:hover { border-color:var(--accent); background:rgba(184,240,74,0.08); }
-
+  .url-btn:hover { border-color:var(--accent); }
   #route-loaded { display:none; background:rgba(184,240,74,0.06); border:1px solid rgba(184,240,74,0.2); border-radius:10px; padding:16px 20px; margin-top:16px; }
   .route-loaded-header { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
   .route-check { color:var(--accent); font-size:20px; }
-  .route-name { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; }
+  .route-name-disp { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; }
   .route-stats { display:flex; gap:16px; flex-wrap:wrap; }
   .route-stat { font-size:12px; color:var(--muted); }
   .route-stat strong { color:var(--text); }
-
   #waypoint-strip { margin-top:14px; display:none; }
   .wp-title { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
   .wp-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; }
@@ -103,32 +76,14 @@
   .wp-card-label { font-size:9px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
   .wp-card-temp { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; }
   .wp-card-desc { font-size:10px; color:var(--muted); margin-top:2px; }
-
-  .form-section { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px; }
-  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .form-grid.cols3 { grid-template-columns:1fr 1fr 1fr; }
-  .form-group { display:flex; flex-direction:column; gap:7px; }
-  label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
-  input, select { background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'Barlow',sans-serif; font-size:14px; padding:11px 14px; outline:none; transition:border-color .2s; width:100%; appearance:none; }
-  input:focus, select:focus { border-color:var(--accent); }
-  select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7a6d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
-
-  .ride-types { display:flex; gap:8px; flex-wrap:wrap; }
-  .ride-pill { background:var(--surface2); border:1px solid var(--border); border-radius:100px; padding:8px 16px; font-size:13px; font-weight:500; cursor:pointer; transition:all .15s; user-select:none; }
-  .ride-pill:hover { border-color:var(--accent); color:var(--accent); }
-  .ride-pill.active { background:var(--accent); border-color:var(--accent); color:#0d0f0e; }
-
   .cta-btn { width:100%; background:var(--accent); color:#0d0f0e; border:none; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:18px; cursor:pointer; transition:all .2s; margin-top:4px; }
   .cta-btn:hover { background:#cdf56a; transform:translateY(-1px); }
   .cta-btn:active { transform:translateY(0); }
-  .cta-btn:disabled { opacity:.4; cursor:not-allowed; transform:none; }
-
   #results { display:none; margin-top:40px; animation:fadeUp .5s ease forwards; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
   .results-header { display:flex; align-items:baseline; gap:16px; margin-bottom:20px; padding-bottom:18px; border-bottom:1px solid var(--border); }
   .results-title { font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:900; text-transform:uppercase; color:var(--accent); }
   .results-meta { font-size:13px; color:var(--muted); }
-
   #route-timeline { display:none; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin-bottom:20px; }
   .timeline-title { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
   .timeline-track { height:48px; background:var(--surface2); border-radius:8px; overflow:hidden; margin-bottom:8px; display:flex; }
@@ -136,10 +91,8 @@
   .timeline-seg:last-child { border-right:none; }
   .timeline-labels { display:flex; }
   .timeline-label { flex:1; font-size:10px; color:var(--muted); text-align:center; padding-top:4px; }
-
   .condition-banner { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:8px; padding:14px 18px; margin-bottom:20px; font-size:14px; line-height:1.65; }
   .condition-banner strong { color:var(--accent); }
-
   .kit-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; }
   .kit-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; transition:border-color .2s; }
   .kit-card:hover { border-color:var(--accent); }
@@ -147,39 +100,26 @@
   .kit-category { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
   .kit-item { font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:700; line-height:1.2; margin-bottom:7px; }
   .kit-reason { font-size:13px; color:var(--muted); line-height:1.5; }
-  .kit-badge { display:inline-block; border-radius:100px; font-size:9px; letter-spacing:1px; text-transform:uppercase; padding:3px 10px; margin-top:7px; }
-  .kit-badge.warn { background:rgba(240,184,74,0.1); color:var(--warn); border:1px solid rgba(240,184,74,0.2); }
-
+  .kit-badge { display:inline-block; border-radius:100px; font-size:9px; letter-spacing:1px; text-transform:uppercase; padding:3px 10px; margin-top:7px; background:rgba(240,184,74,0.1); color:var(--warn); border:1px solid rgba(240,184,74,0.2); }
   .tips-section { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:22px; margin-bottom:24px; }
   .tips-title { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
   .tip { display:flex; gap:12px; margin-bottom:11px; font-size:14px; line-height:1.5; }
   .tip-icon { color:var(--accent2); flex-shrink:0; }
-
   #loading-overlay { display:none; position:fixed; inset:0; background:rgba(13,15,14,.88); z-index:100; align-items:center; justify-content:center; flex-direction:column; gap:20px; backdrop-filter:blur(4px); }
   #loading-overlay.active { display:flex; }
-  .loading-spinner { width:48px;height:48px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; }
-  .loading-text { font-family:'Barlow Condensed',sans-serif; font-size:16px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); text-align:center; }
-
+  .loading-spinner { width:48px; height:48px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; }
+  .loading-text { font-family:'Barlow Condensed',sans-serif; font-size:16px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); }
   .error-msg { background:rgba(240,74,74,0.1); border:1px solid rgba(240,74,74,0.3); border-radius:8px; padding:12px 16px; color:var(--danger); font-size:13px; margin-bottom:14px; display:none; }
   .info-msg { background:rgba(74,240,184,0.08); border:1px solid rgba(74,240,184,0.2); border-radius:8px; padding:10px 14px; color:var(--accent2); font-size:12px; margin-top:10px; display:none; }
-
   footer { text-align:center; padding:36px 0; color:var(--muted); font-size:11px; letter-spacing:1px; border-top:1px solid var(--border); margin-top:40px; }
-
-  @media(max-width:600px){
-    .form-grid,.form-grid.cols3 { grid-template-columns:1fr; }
-    .kit-grid { grid-template-columns:1fr; }
-    .logo { font-size:38px; }
-    .url-row { flex-direction:column; }
-  }
+  @media(max-width:600px) { .form-grid,.form-grid.cols3{grid-template-columns:1fr} .kit-grid{grid-template-columns:1fr} .logo{font-size:38px} .url-row{flex-direction:column} }
 </style>
 </head>
 <body>
-
 <div id="loading-overlay">
   <div class="loading-spinner"></div>
   <div class="loading-text" id="loading-text">Analysing conditions...</div>
 </div>
-
 <div class="container">
   <header>
     <div class="logo">Kit Up<span> /</span></div>
@@ -191,7 +131,6 @@
       <div class="spinner-sm"></div> Detecting location &amp; weather...
     </div>
   </div>
-
   <div class="error-msg" id="error-msg"></div>
 
   <div class="tabs">
@@ -213,31 +152,22 @@
     <div class="form-section">
       <div class="section-label">— Ride Details</div>
       <div class="form-grid cols3">
-        <div class="form-group">
-          <label>Distance</label>
+        <div class="form-group"><label>Distance</label>
           <select id="distance">
-            <option value="5">Up to 5 miles</option>
-            <option value="15">5–15 miles</option>
-            <option value="30" selected>15–30 miles</option>
-            <option value="50">30–50 miles</option>
-            <option value="75">50–75 miles</option>
-            <option value="100">75–100 miles</option>
-            <option value="100+">100+ miles</option>
+            <option value="5">Up to 5 miles</option><option value="15">5–15 miles</option>
+            <option value="30" selected>15–30 miles</option><option value="50">30–50 miles</option>
+            <option value="75">50–75 miles</option><option value="100">75–100 miles</option>
+            <option value="120">100+ miles</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Duration</label>
+        <div class="form-group"><label>Duration</label>
           <select id="duration">
-            <option value="30min">Under 30 min</option>
-            <option value="1hr">~1 hour</option>
-            <option value="2hr" selected>~2 hours</option>
-            <option value="3hr">~3 hours</option>
-            <option value="4hr">~4 hours</option>
-            <option value="5hr+">5+ hours</option>
+            <option value="0.5">Under 30 min</option><option value="1">~1 hour</option>
+            <option value="2" selected>~2 hours</option><option value="3">~3 hours</option>
+            <option value="4">~4 hours</option><option value="5">5+ hours</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Intensity</label>
+        <div class="form-group"><label>Intensity</label>
           <select id="intensity">
             <option value="easy">Easy / recovery</option>
             <option value="moderate" selected>Moderate</option>
@@ -249,20 +179,17 @@
     <div class="form-section">
       <div class="section-label">— How Are You Feeling Today?</div>
       <div class="form-grid">
-        <div class="form-group">
-          <label>Body temperature today</label>
+        <div class="form-group"><label>Body temperature today</label>
           <select id="feeling">
             <option value="cold">Running cold</option>
             <option value="normal" selected>Normal</option>
             <option value="hot">Running hot</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Recent rain?</label>
+        <div class="form-group"><label>Recent rain?</label>
           <select id="rain_override">
             <option value="auto" selected>Auto-detect</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value="yes">Yes</option><option value="no">No</option>
           </select>
         </div>
       </div>
@@ -280,19 +207,16 @@
         <div class="drop-title">Drop your GPX file here</div>
         <div class="drop-sub">Export from Strava (Route → Export GPX) or RideWithGPS (Download → GPX Track)</div>
       </div>
-
-      <div class="or-divider">or paste a public route URL</div>
-
+      <div class="or-divider">or paste a public RideWithGPS URL</div>
       <div class="url-row">
-        <input class="url-input" type="text" id="route-url" placeholder="https://ridewithgps.com/routes/... or Strava route URL" />
+        <input class="url-input" type="text" id="route-url" placeholder="https://ridewithgps.com/routes/..."/>
         <button class="url-btn" onclick="loadRouteURL()">Load</button>
       </div>
       <div class="info-msg" id="url-info"></div>
-
       <div id="route-loaded">
         <div class="route-loaded-header">
           <div class="route-check">✓</div>
-          <div class="route-name" id="route-name-display">Route loaded</div>
+          <div class="route-name-disp" id="route-name-display">Route loaded</div>
         </div>
         <div class="route-stats" id="route-stats-display"></div>
         <div id="waypoint-strip">
@@ -301,7 +225,6 @@
         </div>
       </div>
     </div>
-
     <div class="form-section">
       <div class="section-label">— Ride Type &amp; Feel</div>
       <div style="margin-bottom:14px;">
@@ -313,16 +236,14 @@
         </div>
       </div>
       <div class="form-grid">
-        <div class="form-group">
-          <label>Intensity</label>
+        <div class="form-group"><label>Intensity</label>
           <select id="route-intensity">
             <option value="easy">Easy / recovery</option>
             <option value="moderate" selected>Moderate</option>
             <option value="hard">Hard / race pace</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Body temperature today</label>
+        <div class="form-group"><label>Body temperature today</label>
           <select id="route-feeling">
             <option value="cold">Running cold</option>
             <option value="normal" selected>Normal</option>
@@ -352,93 +273,79 @@
       <div id="tips-list"></div>
     </div>
   </div>
-
-  <footer>Kit Up — Real weather · Route-aware · Claude AI</footer>
+  <footer>Kit Up — Real weather · Route-aware · No internet required for kit logic</footer>
 </div>
 
 <script>
+// ── State ──────────────────────────────────────────────────────────────────────
 let weatherData = null;
 let routeData = null;
 let waypointWeather = [];
 let rideTypes = { manual: 'road', route: 'road' };
 
+// ── UI helpers ─────────────────────────────────────────────────────────────────
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='manual')||(i===1&&tab==='route')));
   document.getElementById('panel-manual').classList.toggle('active', tab==='manual');
   document.getElementById('panel-route').classList.toggle('active', tab==='route');
 }
-
 function selectRide(el, group) {
   el.closest('.ride-types').querySelectorAll('.ride-pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   rideTypes[group] = el.dataset.type;
 }
+function setLoading(v, msg='Analysing...') {
+  document.getElementById('loading-overlay').classList.toggle('active', v);
+  document.getElementById('loading-text').textContent = msg;
+}
+function showError(msg) { const e=document.getElementById('error-msg'); e.textContent=msg; e.style.display='block'; }
+function hideError() { document.getElementById('error-msg').style.display='none'; }
 
-// Drag & drop
+// ── GPX ────────────────────────────────────────────────────────────────────────
 const dz = document.getElementById('drop-zone');
 dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
 dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
 dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); if(e.dataTransfer.files[0]) processGPX(e.dataTransfer.files[0]); });
 function handleGPXFile(e) { if(e.target.files[0]) processGPX(e.target.files[0]); }
-
-function processGPX(file) {
-  const reader = new FileReader();
-  reader.onload = e => parseGPX(e.target.result, file.name.replace(/\.gpx$/i,''));
-  reader.readAsText(file);
-}
+function processGPX(file) { const r=new FileReader(); r.onload=e=>parseGPX(e.target.result, file.name.replace(/\.gpx$/i,'')); r.readAsText(file); }
 
 function parseGPX(xmlStr, fallbackName) {
   try {
     const xml = new DOMParser().parseFromString(xmlStr, 'text/xml');
     const name = xml.querySelector('name')?.textContent?.trim() || fallbackName || 'Loaded Route';
     const pts = [...xml.querySelectorAll('trkpt,rtept')];
-    if (!pts.length) { showError('No track points found in GPX file.'); return; }
-    const points = pts.map(p => ({
-      lat: parseFloat(p.getAttribute('lat')),
-      lon: parseFloat(p.getAttribute('lon')),
-      ele: parseFloat(p.querySelector('ele')?.textContent || 0)
-    }));
-    let dist = 0;
-    for (let i=1; i<points.length; i++) dist += haversine(points[i-1], points[i]);
-    const elevGain = points.reduce((a,p,i) => i>0&&p.ele>points[i-1].ele ? a+(p.ele-points[i-1].ele) : a, 0);
-    routeData = { name, distanceMiles: dist, elevationGainFt: Math.round(elevGain*3.281), points };
+    if (!pts.length) { showError('No track points found in GPX.'); return; }
+    const points = pts.map(p => ({ lat:parseFloat(p.getAttribute('lat')), lon:parseFloat(p.getAttribute('lon')), ele:parseFloat(p.querySelector('ele')?.textContent||0) }));
+    let dist=0; for(let i=1;i<points.length;i++) dist+=haversine(points[i-1],points[i]);
+    const elevGain = points.reduce((a,p,i)=>i>0&&p.ele>points[i-1].ele?a+(p.ele-points[i-1].ele):a,0);
+    routeData = { name, distanceMiles:dist, elevationGainFt:Math.round(elevGain*3.281), points };
     onRouteLoaded();
   } catch(e) { showError('Could not parse GPX. Please try re-exporting.'); }
 }
-
-function haversine(a, b) {
+function haversine(a,b) {
   const R=3958.8, dLat=(b.lat-a.lat)*Math.PI/180, dLon=(b.lon-a.lon)*Math.PI/180;
-  const h=Math.sin(dLat/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLon/2)**2;
-  return R*2*Math.asin(Math.sqrt(h));
+  return R*2*Math.asin(Math.sqrt(Math.sin(dLat/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLon/2)**2));
 }
 
 async function loadRouteURL() {
   const url = document.getElementById('route-url').value.trim();
   const info = document.getElementById('url-info');
   if (!url) return;
-  info.style.display = 'block';
-
+  info.style.display='block';
   if (url.includes('ridewithgps.com/routes/')) {
     const id = url.match(/routes\/(\d+)/)?.[1];
     if (id) {
-      info.textContent = '📡 Loading RideWithGPS route...';
+      info.textContent = '📡 Loading route...';
       try {
         const r = await fetch(`https://ridewithgps.com/routes/${id}.gpx?sub_format=track`);
         if (!r.ok) throw new Error();
         parseGPX(await r.text(), `RWGPS Route ${id}`);
-        info.style.display = 'none';
-        return;
-      } catch {
-        info.textContent = '⚠️ Could not auto-load. Please export as GPX from RideWithGPS and upload above.';
-        return;
-      }
+        info.style.display='none'; return;
+      } catch { info.textContent='⚠️ Could not auto-load. Please export as GPX and upload above.'; return; }
     }
   }
-  if (url.includes('strava.com')) {
-    info.textContent = '⚠️ Strava requires login for route export. Please go to your route on Strava → Export GPX → upload the file above.';
-    return;
-  }
-  info.textContent = '⚠️ Please paste a RideWithGPS route URL, or export a GPX from Strava and upload it.';
+  if (url.includes('strava.com')) { info.textContent='⚠️ Strava requires login. Go to your route → Export GPX → upload above.'; return; }
+  info.textContent='⚠️ Paste a RideWithGPS URL, or export a GPX and upload above.';
 }
 
 async function onRouteLoaded() {
@@ -446,88 +353,72 @@ async function onRouteLoaded() {
   document.getElementById('route-stats-display').innerHTML = `
     <div class="route-stat"><strong>${routeData.distanceMiles.toFixed(1)}</strong> miles</div>
     <div class="route-stat"><strong>${routeData.elevationGainFt.toLocaleString()}</strong> ft gain</div>
-    <div class="route-stat"><strong>${routeData.points.length.toLocaleString()}</strong> track points</div>
-  `;
-  document.getElementById('route-loaded').style.display = 'block';
-  document.getElementById('waypoint-strip').style.display = 'block';
-  document.getElementById('wp-row').innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;"><div class="spinner-sm"></div> Fetching weather along route...</div>`;
+    <div class="route-stat"><strong>${routeData.points.length.toLocaleString()}</strong> track points</div>`;
+  document.getElementById('route-loaded').style.display='block';
+  document.getElementById('waypoint-strip').style.display='block';
+  document.getElementById('wp-row').innerHTML=`<div style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;"><div class="spinner-sm"></div> Fetching weather along route...</div>`;
 
-  const n = 5;
-  const step = Math.floor((routeData.points.length-1)/(n-1));
-  const wpts = Array.from({length:n}, (_,i) => routeData.points[Math.min(i*step, routeData.points.length-1)]);
+  const n=5, step=Math.floor((routeData.points.length-1)/(n-1));
+  const wpts = Array.from({length:n},(_,i)=>routeData.points[Math.min(i*step,routeData.points.length-1)]);
+  waypointWeather = await Promise.all(wpts.map((pt,i)=>fetchWeatherAt(pt.lat,pt.lon,i)));
 
-  // Estimate hour offset for each waypoint based on position in ride
-  // We'll fetch hourly and offset by approximate ride fraction * duration
-  waypointWeather = await Promise.all(wpts.map((pt,i) => fetchWeatherAt(pt.lat, pt.lon, i)));
-
-  const labels = ['Start','25%','Mid','75%','Finish'];
-  document.getElementById('wp-row').innerHTML = waypointWeather.map((w,i) => `
+  const labels=['Start','25%','Mid','75%','Finish'];
+  document.getElementById('wp-row').innerHTML = waypointWeather.map((w,i)=>`
     <div class="wp-card">
       <div class="wp-card-label">${labels[i]}</div>
       <div class="wp-card-temp" style="color:${tempColor(w.temp)}">${w.temp}°F</div>
       <div class="wp-card-desc">${w.desc}</div>
       <div class="wp-card-desc">${w.wind} mph · ${w.precipProb}% rain</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-function tempColor(t) {
-  if (t<40) return 'var(--accent2)'; if (t<55) return 'var(--text)';
-  if (t<70) return 'var(--accent)'; return 'var(--warn)';
-}
+function tempColor(t) { return t<40?'var(--accent2)':t<55?'var(--text)':t<70?'var(--accent)':'var(--warn)'; }
 
+// ── Weather ────────────────────────────────────────────────────────────────────
 async function fetchWeatherAt(lat, lon, hourOffset) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
-    `&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,cloud_cover` +
-    `&hourly=temperature_2m,precipitation_probability&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=1`;
-  const d = await fetch(url).then(r=>r.json());
-  const now = new Date();
-  const idx = Math.min((d.hourly.time.findIndex(t=>new Date(t)>=now)||0) + (hourOffset||0), d.hourly.temperature_2m.length-1);
+  const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,cloud_cover&hourly=temperature_2m,precipitation_probability&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_days=1`;
+  const d=await fetch(url).then(r=>r.json());
+  const now=new Date();
+  const idx=Math.min((d.hourly.time.findIndex(t=>new Date(t)>=now)||0)+(hourOffset||0), d.hourly.temperature_2m.length-1);
   return {
-    temp: Math.round(d.hourly.temperature_2m[Math.max(0,idx)] || d.current.temperature_2m),
-    humidity: d.current.relative_humidity_2m,
-    precipitation: d.current.precipitation,
-    weatherCode: d.current.weather_code,
-    wind: Math.round(d.current.wind_speed_10m),
-    cloudCover: d.current.cloud_cover,
-    precipProb: d.hourly.precipitation_probability[Math.max(0,idx)] || 0,
+    temp: Math.round(d.hourly.temperature_2m[Math.max(0,idx)]||d.current.temperature_2m),
+    humidity: d.current.relative_humidity_2m, precipitation: d.current.precipitation,
+    weatherCode: d.current.weather_code, wind: Math.round(d.current.wind_speed_10m),
+    cloudCover: d.current.cloud_cover, precipProb: d.hourly.precipitation_probability[Math.max(0,idx)]||0,
     desc: weatherCodeDesc(d.current.weather_code)
   };
 }
 
 async function fetchWeather() {
   try {
-    const pos = await new Promise((res,rej) => navigator.geolocation.getCurrentPosition(res,rej,{timeout:10000}));
-    const {latitude:lat, longitude:lon} = pos.coords;
-    const [w, geo, forecast] = await Promise.all([
-      fetchWeatherAt(lat, lon, 0),
+    const pos = await new Promise((res,rej)=>navigator.geolocation.getCurrentPosition(res,rej,{timeout:10000}));
+    const {latitude:lat,longitude:lon}=pos.coords;
+    const [w,geo,fc] = await Promise.all([
+      fetchWeatherAt(lat,lon,0),
       fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`).then(r=>r.json()).catch(()=>({})),
       fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m&temperature_unit=fahrenheit&timezone=auto&forecast_days=1`).then(r=>r.json())
     ]);
-    const city = geo.address?.city || geo.address?.town || geo.address?.village || `${lat.toFixed(2)},${lon.toFixed(2)}`;
-    const now = new Date();
-    const idx = forecast.hourly.time.findIndex(t=>new Date(t)>=now)||0;
-    const next6 = forecast.hourly.temperature_2m.slice(idx, idx+6);
-    weatherData = {...w, city, lat, lon, tempTrend: next6};
+    const city=geo.address?.city||geo.address?.town||geo.address?.village||`${lat.toFixed(2)},${lon.toFixed(2)}`;
+    const now=new Date(), idx=fc.hourly.time.findIndex(t=>new Date(t)>=now)||0;
+    const next6=fc.hourly.temperature_2m.slice(idx,idx+6);
+    weatherData={...w,city,lat,lon,tempTrend:next6};
     renderWeatherStrip();
   } catch(e) {
-    document.getElementById('weather-strip').innerHTML = `<div style="color:var(--warn);font-size:13px;">⚠️ Location access denied. Please allow location and refresh.</div>`;
+    document.getElementById('weather-strip').innerHTML=`<div style="color:var(--warn);font-size:13px;">⚠️ Location access denied. Please allow location and refresh.</div>`;
   }
 }
 
 function weatherCodeDesc(c) {
-  if(c===0) return 'Clear'; if(c<=3) return 'Partly cloudy'; if(c<=49) return 'Misty';
-  if(c<=67) return 'Rainy'; if(c<=77) return 'Snowy'; if(c<=82) return 'Showers';
-  if(c<=99) return 'Thunderstorms'; return 'Mixed';
+  if(c===0)return'Clear'; if(c<=3)return'Partly cloudy'; if(c<=49)return'Misty';
+  if(c<=67)return'Rainy'; if(c<=77)return'Snowy'; if(c<=82)return'Showers';
+  if(c<=99)return'Thunderstorms'; return'Mixed';
 }
 
 function renderWeatherStrip() {
-  const w = weatherData;
-  const hi=Math.round(Math.max(...w.tempTrend)), lo=Math.round(Math.min(...w.tempTrend));
-  const trend=hi-w.temp;
-  const tStr=trend>2?`▲ +${trend}°F`:trend<-2?`▼ ${trend}°F`:'→ Stable';
+  const w=weatherData, hi=Math.round(Math.max(...w.tempTrend)), lo=Math.round(Math.min(...w.tempTrend));
+  const trend=hi-w.temp, tStr=trend>2?`▲ +${trend}°F`:trend<-2?`▼ ${trend}°F`:'→ Stable';
   const tCol=trend>2?'var(--warn)':trend<-2?'var(--accent2)':'var(--muted)';
-  document.getElementById('weather-strip').innerHTML = `
+  document.getElementById('weather-strip').innerHTML=`
     <div class="w-stat"><div class="w-label">Now</div><div class="w-val">${w.temp}°F</div></div>
     <div class="w-div"></div>
     <div class="w-stat"><div class="w-label">6hr Range</div><div class="w-val">${lo}–${hi}°F</div></div>
@@ -539,85 +430,186 @@ function renderWeatherStrip() {
     <div class="w-stat"><div class="w-label">Wind</div><div class="w-val">${w.wind} mph</div></div>
     <div class="w-div"></div>
     <div class="w-stat"><div class="w-label">Conditions</div><div class="w-val" style="font-size:14px;">${w.desc}</div></div>
-    <div class="loc-badge"><div class="loc-dot"></div>${w.city}</div>
-  `;
+    <div class="loc-badge"><div class="loc-dot"></div>${w.city}</div>`;
 }
 
-const kitIcons = {'base layer':'🧥','jersey':'👕','bibs':'🩳','shorts':'🩳','jacket':'🧥','vest':'🦺','gilet':'🦺','gloves':'🧤','shoe covers':'👟','overshoes':'👟','socks':'🧦','eyewear':'🕶️','glasses':'🕶️','sunglasses':'🕶️','cap':'🧢','arm warmers':'💪','leg warmers':'🦵','bib tights':'🩲','rain jacket':'🌧️','waterproof':'🌧️'};
-function getIcon(cat) { const l=cat.toLowerCase(); for(const[k,v] of Object.entries(kitIcons)) if(l.includes(k)) return v; return '👕'; }
+// ── Kit logic (fully local, no API needed) ─────────────────────────────────────
+function buildKit(w, rideType, intensity, feeling, recentRain, durationHrs, elevGainFt) {
+  const temps = w.tempTrend && w.tempTrend.length ? w.tempTrend : [w.temp];
+  const minTemp = Math.round(Math.min(...temps, w.temp));
+  const maxTemp = Math.round(Math.max(...temps, w.temp));
+  const tempRange = maxTemp - minTemp;
 
+  // Feeling adjustment
+  const feelAdj = feeling==='cold' ? -5 : feeling==='hot' ? 5 : 0;
+  const effMin = minTemp + feelAdj;
+  const effMax = maxTemp + feelAdj;
+
+  const isWet = recentRain || w.precipProb > 40 || w.weatherCode >= 50;
+  const isWindy = w.wind > 15;
+  const isHumid = w.humidity > 75;
+  const road = rideType==='road', mtb=rideType==='mtb', gravel=rideType==='gravel', commute=rideType==='commute';
+  const hardEffort = intensity==='hard';
+  const bigElev = elevGainFt > 2000, modElev = elevGainFt > 600;
+  const longRide = durationHrs >= 3;
+
+  // ── Base Layer ──
+  let baseLayer;
+  if (effMin < 38) baseLayer = { item:'Thermal long-sleeve base layer', reason:`Very cold start at ${effMin}°F — thermal base is essential for core warmth.` };
+  else if (effMin < 50) baseLayer = { item:'Lightweight long-sleeve base layer', reason:`Cool temps warrant a wicking base for moisture management and warmth.` };
+  else if (effMin < 62 && !hardEffort) baseLayer = { item:'Short-sleeve lightweight base layer', reason:`Mild temps with moderate effort — a thin base adds comfort without overheating.` };
+  else if (hardEffort && effMin > 55) baseLayer = { item:'No base layer needed', reason:`Hard effort generates significant heat — a base layer would cause overheating.` };
+  else baseLayer = { item:'Ultralight sleeveless base layer', reason:`Warm conditions — a sleeveless base manages sweat without adding warmth.` };
+
+  // ── Jersey ──
+  let jersey;
+  if (effMin < 40) jersey = { item:'Long-sleeve thermal jersey', reason:`Cold conditions — thermal jersey provides essential insulation for the full ride.` };
+  else if (effMin < 50 && effMax < 60) jersey = { item:'Long-sleeve lightweight jersey', reason:`Consistently cool temps suit a long-sleeve jersey throughout the ride.` };
+  else if (effMin < 50 && effMax >= 60) jersey = { item:'Long-sleeve jersey or arm warmers over short-sleeve', reason:`Cool start warming to ${effMax}°F — arm warmers over a short-sleeve jersey give flexibility.`, alert:`Pack arm warmers for the return leg` };
+  else if (effMin < 60) jersey = { item:'Short-sleeve mid-weight jersey', reason:`Cool to mild temps — a mid-weight short-sleeve keeps you comfortable throughout.` };
+  else jersey = { item:'Lightweight short-sleeve summer jersey', reason:`Warm conditions — a lightweight jersey maximises airflow and comfort.` };
+  if (mtb) jersey.reason += ' Relaxed MTB cut for trail movement.';
+  if (gravel) jersey.reason += ' Gravel-style jersey with deep pockets for longer adventure.';
+
+  // ── Bibs / Shorts ──
+  let bibs;
+  if (effMin < 42) bibs = { item:'Thermal bib tights (full length)', reason:`Very cold — full thermal tights essential below ${effMin}°F.` };
+  else if (effMin < 50) bibs = { item:'3/4 length bib tights or bib shorts + leg warmers', reason:`Cool temps — 3/4 tights or shorts with removable leg warmers.` };
+  else if (effMin < 58) bibs = { item:'Bib shorts with lightweight leg warmers', reason:`Cool start — bib shorts give flexibility; leg warmers can be removed as temps rise.` };
+  else bibs = { item:'Summer bib shorts', reason:`Warm enough for shorts throughout — good chamois padding for a ${longRide?'long':'multi-hour'} ride.` };
+
+  // ── Jacket or Vest ──
+  let jacket;
+  if (effMin < 38) jacket = { item:'Insulated windproof jacket', reason:`Very cold — an insulated jacket is essential for the start of the ride.` };
+  else if (effMin < 45 && isWet) jacket = { item:'Waterproof softshell jacket', reason:`Cold and wet — a waterproof jacket protects from rain and wind chill.` };
+  else if (effMin < 45) jacket = { item:'Windproof softshell jacket', reason:`Cold conditions — a windproof jacket blocks wind chill at ${effMin}°F.` };
+  else if (effMin < 55 && isWet) jacket = { item:'Lightweight waterproof jacket', reason:`Cool and wet — a packable waterproof protects from rain and road spray.`, alert:`Can pack into jersey pocket when temp rises` };
+  else if (effMin < 55 && tempRange > 10) jacket = { item:'Packable gilet / wind vest', reason:`Cool start rising ${tempRange}°F — a gilet adds warmth early without overheating later.`, alert:`Stow in jersey pocket mid-ride` };
+  else if (effMin < 55) jacket = { item:'Lightweight gilet / wind vest', reason:`Cool conditions with light wind — a gilet provides just enough protection.` };
+  else if (isWet) jacket = { item:'Lightweight waterproof gilet', reason:`Rain risk — a waterproof gilet keeps your core dry without overheating.` };
+  else jacket = { item:'No jacket needed', reason:`Temps of ${effMin}–${effMax}°F are warm enough without extra layers.` };
+
+  // ── Gloves ──
+  let gloves;
+  if (effMin < 36) gloves = { item:'Full-finger insulated winter gloves', reason:`Very cold — insulated gloves essential to protect hands and maintain dexterity.` };
+  else if (effMin < 45) gloves = { item:'Full-finger thermal cycling gloves', reason:`Cold conditions — full-finger gloves keep hands warm and functional.` };
+  else if (effMin < 55) gloves = { item:'Full-finger lightweight cycling gloves', reason:`Cool temps warrant full-finger gloves for comfort on the bars.` };
+  else if (effMin < 62 || isWet) gloves = { item:'Short-finger gloves with light padding', reason:`Mild temps${isWet?' with wet conditions':''} — light gloves protect hands without overheating.` };
+  else gloves = { item:'No gloves needed', reason:`Warm enough that gloves would cause overheating — bare hands are comfortable.` };
+
+  // ── Shoe Covers ──
+  let shoeCovers;
+  if (effMin < 40) shoeCovers = { item:'Neoprene overshoes / thermal booties', reason:`Very cold — neoprene overshoes are essential for foot insulation below ${effMin}°F.` };
+  else if (effMin < 50 && isWet) shoeCovers = { item:'Waterproof overshoes', reason:`Cool and wet — waterproof overshoes keep feet dry from rain and road spray.` };
+  else if (effMin < 50) shoeCovers = { item:'Lightweight windproof shoe covers', reason:`Cool temps — windproof covers prevent cold air flowing through vented shoes.` };
+  else if (isWet && recentRain) shoeCovers = { item:'Lightweight waterproof overshoes', reason:`Wet roads from recent rain will cause spray — overshoes prevent soaked feet.` };
+  else shoeCovers = { item:'No shoe covers needed', reason:`Warm and dry enough — shoe covers would cause overheating.` };
+
+  // ── Socks ──
+  let socks;
+  if (effMin < 45) socks = { item:'Thermal merino wool cycling socks', reason:`Cold temps — thermal socks essential under overshoes.` };
+  else if (effMin < 58) socks = { item:'Mid-weight cycling socks', reason:`Cool conditions suit a medium-weight sock for comfort and warmth.` };
+  else socks = { item:'Lightweight summer cycling socks', reason:`Warm conditions — lightweight socks keep feet cool and comfortable.` };
+
+  // ── Arm / Leg Warmers ──
+  let warmers;
+  if (effMin < 42 && effMax > 62) warmers = { item:'Arm warmers + knee warmers', reason:`Big swing of ${tempRange}°F — start with both, remove as temp rises mid-ride.`, alert:`Pack in jersey pocket after 1st hour` };
+  else if (effMin < 50 && effMax > 60) warmers = { item:'Arm warmers', reason:`Cool start rising to ${effMax}°F — arm warmers are the perfect removable layer.`, alert:`Remove and stow once temp rises` };
+  else if (effMin < 48) warmers = { item:'Arm warmers + leg warmers', reason:`Cool throughout — warmers add flexible layering over shorts and short-sleeve.` };
+  else if (effMin < 55 && (bigElev||modElev)) warmers = { item:'Arm warmers', reason:`${elevGainFt}ft of climbing means cool descents — arm warmers add flexible warmth.` };
+  else warmers = { item:'Not needed', reason:`${effMin}–${effMax}°F range doesn't warrant warmers — jersey and bibs are sufficient.` };
+
+  // ── Eyewear ──
+  let eyewear;
+  if (w.weatherCode===0 || w.cloudCover<30) eyewear = { item:'Sunglasses — dark lens', reason:`Clear skies — UV protection and glare reduction essential.` };
+  else if (isWet || w.weatherCode>=50) eyewear = { item:'Clear or lightly tinted lens glasses', reason:`Wet / overcast — clear lenses protect from rain and spray without darkening vision.` };
+  else eyewear = { item:'Photochromic / transition lens glasses', reason:`Mixed light — photochromic lenses adapt as cloud cover changes.` };
+  if (mtb) eyewear.reason += ' Essential for trail debris and branches.';
+  if (gravel) eyewear.reason += ' Wrap-around style protects from gravel spray.';
+
+  // ── Cap / Helmet Liner ──
+  let cap;
+  if (effMin < 38) cap = { item:'Thermal skull cap under helmet', reason:`Very cold — thermal cap covering ears is essential.` };
+  else if (effMin < 48) cap = { item:'Lightweight cycling cap or helmet liner', reason:`Cool start benefits from ear and head coverage under the helmet.` };
+  else if (isWet) cap = { item:'Water-resistant peaked cycling cap', reason:`Rain — a peaked cap keeps water out of eyes and face.` };
+  else if (w.cloudCover<40 && effMax>65) cap = { item:'Lightweight summer cycling cap', reason:`Sun protection on a warm, bright day.` };
+  else cap = { item:'No cap needed', reason:`Conditions don't warrant a cap — helmet alone is sufficient.` };
+
+  // ── Summary & Tips ──
+  const wetNote = isWet?`Wet/damp conditions (${recentRain?'recent rain, ':''}${w.precipProb||0}% rain probability) mean road spray is likely. `:'';
+  const windNote = isWindy?`Wind at ${w.wind}mph adds significant wind chill. `:'';
+  const elevNote = bigElev?`${elevGainFt}ft of climbing means you'll heat up on ascents and cool rapidly on descents. `:modElev?`Moderate climbing (${elevGainFt}ft) will cause some temperature variation. `:'';
+  const tempNote = tempRange>10?`Temperature rises ${tempRange}°F during the ride (${minTemp}→${maxTemp}°F) — start with removable layers. `:`Temperatures hold around ${minTemp}–${maxTemp}°F throughout. `;
+  const conditionSummary = tempNote + wetNote + windNote + elevNote + `Kit calibrated for ${rideType} at ${intensity} intensity.`;
+
+  const tips = [];
+  if (tempRange>10) tips.push(`Start with your gilet or jacket — you'll want to remove it as the temperature climbs ${tempRange}°F during the ride. Use back jersey pockets to stow it.`);
+  if (isWet||recentRain) tips.push(`Roads are wet — allow extra braking distance especially on descents, and check brake pads before heading out.`);
+  if (bigElev) tips.push(`On long descents, put your jacket back on at the summit — speeds above 30mph create severe wind chill even in mild temperatures.`);
+  if (isWindy) tips.push(`Wind at ${w.wind}mph — ride into the wind on the way out so you have a tailwind home when you're most tired.`);
+  if (isHumid) tips.push(`High humidity (${w.humidity}%) slows sweat evaporation — carry extra water and don't overdress.`);
+  if (tips.length<3) tips.push(`Apply chamois cream before heading out — comfort over the full ${longRide?'long':'multi-hour'} ride matters more than at the start.`);
+  if (tips.length<3) tips.push(`Check tyre pressure: ${isWet?'drop 5–10psi for better wet-weather grip':'correct pressure reduces rolling resistance and puncture risk'}.`);
+
+  return {
+    conditionSummary,
+    kit: [
+      {category:'Base Layer',...baseLayer,alert:baseLayer.alert||null},
+      {category:'Jersey',...jersey,alert:jersey.alert||null},
+      {category:'Bibs / Shorts',...bibs,alert:bibs.alert||null},
+      {category:'Jacket or Vest',...jacket,alert:jacket.alert||null},
+      {category:'Gloves',...gloves,alert:gloves.alert||null},
+      {category:'Shoe Covers',...shoeCovers,alert:shoeCovers.alert||null},
+      {category:'Socks',...socks,alert:socks.alert||null},
+      {category:'Arm / Leg Warmers',...warmers,alert:warmers.alert||null},
+      {category:'Eyewear',...eyewear,alert:eyewear.alert||null},
+      {category:'Cap / Helmet Liner',...cap,alert:cap.alert||null},
+    ],
+    tips: tips.slice(0,3)
+  };
+}
+
+// ── Main recommendation handler ────────────────────────────────────────────────
 async function getRecommendation(mode) {
   if (!weatherData) { showError('Weather not loaded. Please allow location access and refresh.'); return; }
-
-  let prompt = '';
-  const COMMON_KIT_INSTRUCTIONS = `
-Respond ONLY with valid JSON, no markdown, no explanation outside JSON:
-{
-  "conditionSummary": "2-3 sentences: key weather factors and what they mean for kit choice. Mention temp changes, rain risk, elevation effects if relevant.",
-  "kit": [
-    { "category": "Base Layer", "item": "specific garment name", "reason": "why for these exact conditions", "alert": null },
-    { "category": "Jersey", "item": "...", "reason": "...", "alert": null },
-    { "category": "Bibs / Shorts", "item": "...", "reason": "...", "alert": null },
-    { "category": "Jacket or Vest", "item": "...", "reason": "...", "alert": null },
-    { "category": "Gloves", "item": "...", "reason": "...", "alert": null },
-    { "category": "Shoe Covers", "item": "...", "reason": "...", "alert": null },
-    { "category": "Socks", "item": "...", "reason": "...", "alert": null },
-    { "category": "Arm / Leg Warmers", "item": "...", "reason": "...", "alert": null },
-    { "category": "Eyewear", "item": "...", "reason": "...", "alert": null },
-    { "category": "Cap / Helmet Liner", "item": "...", "reason": "...", "alert": null }
-  ],
-  "tips": ["Tip 1 specific to today's exact conditions", "Tip 2", "Tip 3"]
-}
-Be very specific with garment names e.g. "lightweight short-sleeve summer jersey" not just "jersey". Alert field = short warning string or null.`;
-
-  if (mode === 'route' && routeData && waypointWeather.length) {
-    const labels = ['Start','25% mark','Halfway','75% mark','Finish'];
-    const wpDesc = waypointWeather.map((w,i)=>`  - ${labels[i]}: ${w.temp}°F, ${w.desc}, ${w.wind}mph wind, ${w.precipProb}% rain`).join('\n');
-    const temps = waypointWeather.map(w=>w.temp);
-    const recentRain = weatherData.precipitation>0 || weatherData.humidity>80;
-    const elevNote = routeData.elevationGainFt>2000 ? 'significant climbing — heat up on climbs, rapid cooling on descents' : routeData.elevationGainFt>500 ? 'moderate climbing — some heating on ascents' : 'mostly flat';
-
-    prompt = `You are an expert cycling kit advisor. Recommend a complete kit for this specific route with changing conditions.
-
-ROUTE: ${routeData.name} | ${routeData.distanceMiles.toFixed(1)} miles | ${routeData.elevationGainFt}ft gain | ${rideTypes.route} | ${document.getElementById('route-intensity').value} intensity | rider running ${document.getElementById('route-feeling').value}
-Elevation note: ${elevNote}
-
-WEATHER AT ROUTE WAYPOINTS:
-${wpDesc}
-
-Temperature range: ${Math.min(...temps)}–${Math.max(...temps)}°F | Recent rain/wet roads: ${recentRain?'YES':'NO'}
-${COMMON_KIT_INSTRUCTIONS}`;
-
-    document.getElementById('route-timeline').style.display = 'block';
-    renderTimeline(waypointWeather, labels);
-    document.getElementById('results-meta').textContent = `${routeData.name} · ${routeData.distanceMiles.toFixed(1)} mi`;
-  } else {
-    const w = weatherData;
-    const hi=Math.round(Math.max(...w.tempTrend));
-    const rainOv=document.getElementById('rain_override').value;
-    const recentRain=rainOv==='auto'?(w.precipitation>0||w.humidity>80||w.weatherCode>=50):rainOv==='yes';
-
-    prompt = `You are an expert cycling kit advisor. Recommend a complete kit.
-
-WEATHER: ${w.temp}°F now → rising to ~${hi}°F | Humidity ${w.humidity}% | Wind ${w.wind}mph | ${w.desc} | Cloud ${w.cloudCover}% | Recent rain: ${recentRain?'YES':'NO'}
-RIDE: ${rideTypes.manual} | ${document.getElementById('distance').value} miles | ${document.getElementById('duration').value} | ${document.getElementById('intensity').value} | rider running ${document.getElementById('feeling').value}
-${COMMON_KIT_INSTRUCTIONS}`;
-
-    document.getElementById('route-timeline').style.display = 'none';
-    document.getElementById('results-meta').textContent = `${rideTypes.manual} · ${document.getElementById('distance').value} miles · ${document.getElementById('duration').value}`;
-  }
-
-  setLoading(true, mode==='route'?'Analysing route weather...':'Analysing conditions...');
+  setLoading(true, mode==='route'?'Analysing route weather...':'Building your kit...');
   hideError();
 
+  await new Promise(r=>setTimeout(r,400)); // small UX pause
+
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{role:'user',content:prompt}] })
-    });
-    const data = await resp.json();
-    const result = JSON.parse((data.content?.[0]?.text||'').replace(/```json|```/g,'').trim());
+    let w, rideType, intensity, feeling, recentRain, durationHrs, elevGainFt=0;
+
+    if (mode==='route' && routeData && waypointWeather.length) {
+      // Use midpoint weather as primary, blend min/max across waypoints
+      const midW = waypointWeather[2] || waypointWeather[0];
+      const allTemps = waypointWeather.map(x=>x.temp);
+      const blendedTrend = allTemps;
+      w = { ...midW, tempTrend: blendedTrend, precipProb: Math.max(...waypointWeather.map(x=>x.precipProb)) };
+      rideType = rideTypes.route;
+      intensity = document.getElementById('route-intensity').value;
+      feeling = document.getElementById('route-feeling').value;
+      recentRain = weatherData.precipitation>0 || weatherData.humidity>80;
+      durationHrs = routeData.distanceMiles / 14; // estimate ~14mph avg
+      elevGainFt = routeData.elevationGainFt;
+      document.getElementById('route-timeline').style.display='block';
+      renderTimeline(waypointWeather, ['Start','25%','Mid','75%','Finish']);
+      document.getElementById('results-meta').textContent=`${routeData.name} · ${routeData.distanceMiles.toFixed(1)} mi`;
+    } else {
+      w = { ...weatherData };
+      rideType = rideTypes.manual;
+      intensity = document.getElementById('intensity').value;
+      feeling = document.getElementById('feeling').value;
+      const rainOv = document.getElementById('rain_override').value;
+      recentRain = rainOv==='auto'?(weatherData.precipitation>0||weatherData.humidity>80||weatherData.weatherCode>=50):rainOv==='yes';
+      durationHrs = parseFloat(document.getElementById('duration').value);
+      document.getElementById('route-timeline').style.display='none';
+      const distLabel = document.getElementById('distance').options[document.getElementById('distance').selectedIndex].text;
+      const durLabel = document.getElementById('duration').options[document.getElementById('duration').selectedIndex].text;
+      document.getElementById('results-meta').textContent=`${rideType} · ${distLabel} · ${durLabel}`;
+    }
+
+    const result = buildKit(w, rideType, intensity, feeling, recentRain, durationHrs, elevGainFt);
     renderResults(result);
   } catch(e) {
     showError('Something went wrong. Please try again.');
@@ -625,12 +617,14 @@ ${COMMON_KIT_INSTRUCTIONS}`;
   } finally { setLoading(false); }
 }
 
+// ── Render ─────────────────────────────────────────────────────────────────────
+const kitIcons = {'base layer':'🧥','jersey':'👕','bibs':'🩳','shorts':'🩳','jacket':'🧥','vest':'🦺','gilet':'🦺','gloves':'🧤','shoe covers':'👟','overshoes':'👟','socks':'🧦','eyewear':'🕶️','glasses':'🕶️','sunglasses':'🕶️','cap':'🧢','arm warmers':'💪','leg warmers':'🦵','bib tights':'🩲','rain jacket':'🌧️','waterproof':'🌧️','skull cap':'🧢'};
+function getIcon(cat) { const l=cat.toLowerCase(); for(const[k,v] of Object.entries(kitIcons)) if(l.includes(k)) return v; return '👕'; }
+
 function renderTimeline(wps, labels) {
-  const temps = wps.map(w=>w.temp);
-  const minT=Math.min(...temps)-3, maxT=Math.max(...temps)+3;
+  const temps=wps.map(w=>w.temp), minT=Math.min(...temps)-3, maxT=Math.max(...temps)+3;
   document.getElementById('timeline-bar').innerHTML = wps.map((w,i)=>{
-    const pct=(w.temp-minT)/(maxT-minT);
-    const r=Math.round(74+pct*116), g=Math.round(240-pct*56), b=Math.round(184-pct*140);
+    const pct=(w.temp-minT)/(maxT-minT), r=Math.round(74+pct*116), g=Math.round(240-pct*56), b=Math.round(184-pct*140);
     return `<div class="timeline-seg" style="background:rgba(${r},${g},${b},0.28)">${w.temp}°F</div>`;
   }).join('');
   document.getElementById('timeline-labels').innerHTML = labels.map(l=>`<div class="timeline-label">${l}</div>`).join('');
@@ -638,14 +632,14 @@ function renderTimeline(wps, labels) {
 
 function renderResults(data) {
   document.getElementById('condition-summary').innerHTML =
-    data.conditionSummary.replace(/\b(rising|warming|dropping|cool|cold|warm|wet|mist|spray|humid|wind|climb|descent|rain|shower)\b/gi, m=>`<strong>${m}</strong>`);
+    data.conditionSummary.replace(/\b(rising|warming|dropping|cool|cold|warm|wet|mist|spray|humid|wind|climb|descent|rain|shower|snow)\b/gi, m=>`<strong>${m}</strong>`);
   document.getElementById('kit-grid').innerHTML = data.kit.map(item=>`
     <div class="kit-card">
       <div class="kit-icon">${getIcon(item.category)}</div>
       <div class="kit-category">${item.category}</div>
       <div class="kit-item">${item.item}</div>
       <div class="kit-reason">${item.reason}</div>
-      ${item.alert?`<div class="kit-badge warn">⚠️ ${item.alert}</div>`:''}
+      ${item.alert?`<div class="kit-badge">⚠️ ${item.alert}</div>`:''}
     </div>`).join('');
   document.getElementById('tips-list').innerHTML = data.tips.map(t=>`
     <div class="tip"><span class="tip-icon">→</span><span>${t}</span></div>`).join('');
@@ -653,13 +647,6 @@ function renderResults(data) {
   r.style.display='block';
   r.scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-function setLoading(v,msg='Analysing...') {
-  document.getElementById('loading-overlay').classList.toggle('active',v);
-  document.getElementById('loading-text').textContent=msg;
-}
-function showError(msg) { const e=document.getElementById('error-msg'); e.textContent=msg; e.style.display='block'; }
-function hideError() { document.getElementById('error-msg').style.display='none'; }
 
 fetchWeather();
 </script>
